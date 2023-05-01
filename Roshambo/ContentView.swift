@@ -373,13 +373,13 @@ struct ActionButton: View {
             
             // MARK: - Background Color - after press
             if gameLogic.cpuScore == 3 || gameLogic.userScore == 3 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4.1) {
                     withAnimation {
                         roshamboViewModel.showResultBg.toggle()
                     }
                 }
             } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.6) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.7) {
                     withAnimation {
                         roshamboViewModel.showResultBg.toggle()
                     }

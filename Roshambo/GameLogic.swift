@@ -26,16 +26,13 @@ class GameLogic: ObservableObject {
         switch (userInput) {
         case 1:
             if cpuInput == 1 {
-                print("DRAW")
                 SoundManager.instance.playSound(sound: .draw)
                 return 0
             } else if cpuInput == 2 {
-                print("YOU LOSE")
                 SoundManager.instance.playSound(sound: .paperWin)
                 cpuScore += 1
                 return 2
             } else if cpuInput == 3 {
-                print("YOU WIN")
                 SoundManager.instance.playSound(sound: .rockWin)
                 userScore += 1
                 return 1
@@ -43,16 +40,13 @@ class GameLogic: ObservableObject {
             break
         case 2:
             if cpuInput == 1 {
-                print("YOU WIN")
                 SoundManager.instance.playSound(sound: .paperWin)
                 userScore += 1
                 return 1
             } else if cpuInput == 2 {
-                print("DRAW")
                 SoundManager.instance.playSound(sound: .draw)
                 return 0
             } else if cpuInput == 3 {
-                print("YOU LOSE")
                 SoundManager.instance.playSound(sound: .scissorsWin)
                 cpuScore += 1
                 return 2
@@ -60,17 +54,14 @@ class GameLogic: ObservableObject {
             break
         case 3:
             if cpuInput == 1 {
-                print("YOU LOSE")
                 SoundManager.instance.playSound(sound: .rockWin)
                 cpuScore += 1
                 return 2
             } else if cpuInput == 2 {
-                print("YOU WIN")
                 SoundManager.instance.playSound(sound: .scissorsWin)
                 userScore += 1
                 return 1
             } else if cpuInput == 3 {
-                print("DRAW")
                 SoundManager.instance.playSound(sound: .draw)
                 return 0
             }
