@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Roshambo
 //
-//  Created by o c e a n i c f a d e d on 08/02/2022.
+//  Created by F F 8 on 08/02/2022.
 //
 
 import SwiftUI
@@ -314,6 +314,8 @@ struct ActionButton: View {
         self.cpuInput = Int.random(in: 1...3)
     }
     
+    var timeAnimation = 0.77
+    
     var body: some View {
         Button(action: {
             SoundManager.instance.playSound(sound: .roshambo)
@@ -324,34 +326,34 @@ struct ActionButton: View {
             
             // Ro Text Toggle
             roTextAnim.toggle()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeAnimation) {
                 withAnimation(Animation.spring().speed(2.88)) {
                     roTextAnim.toggle()
                 }
             }
             
             // Sham Text Toggle
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeAnimation + 0.2) {
                 shamTextAnim.toggle()
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeAnimation*2 + 0.2) {
                 withAnimation(Animation.spring().speed(2.88)) {
                     shamTextAnim.toggle()
                 }
             }
             
             // Bo! Text Toggle
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeAnimation*2 + 0.4) {
                 boTextAnim.toggle()
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.8) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeAnimation*3 + 0.4) {
                 withAnimation(Animation.spring().speed(2.88)) {
                     boTextAnim.toggle()
                 }
             }
             
             // MARK: - Show Result Toggle - after press
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeAnimation*3 + 0.8) {
                 withAnimation(Animation.spring().speed(2.88)) {
                     roshamboViewModel.userInput = userInput
                     roshamboViewModel.cpuInput = cpuInput
@@ -360,7 +362,7 @@ struct ActionButton: View {
                 }
             }
             // MARK: - Show Reset Toggle - after press
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.4) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeAnimation*3 + 1.0) {
                 withAnimation {
                     if gameLogic.cpuScore == 3 || gameLogic.userScore == 3 {
                         // Game Over
