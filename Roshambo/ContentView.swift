@@ -50,14 +50,14 @@ struct ContentView: View {
                     }
                     if roshamboViewModel.letReset {
                         withAnimation {
-                            roshamboViewModel.letReset = false
+                            roshamboViewModel.gameOver = false
                             roshamboViewModel.showFight = false
                             roshamboViewModel.roTextAnim = false
                             roshamboViewModel.shamTextAnim = false
                             roshamboViewModel.boTextAnim = false
                             roshamboViewModel.showResult = false
                             roshamboViewModel.showReset = false
-                            roshamboViewModel.gameOver = false
+                            roshamboViewModel.letReset = false
                         }
                     }
                     
@@ -218,13 +218,13 @@ struct ContentView: View {
         .onTapGesture {
             if roshamboViewModel.letReset {
                 withAnimation {
-                    roshamboViewModel.letReset = false
                     roshamboViewModel.showFight = false
                     roshamboViewModel.roTextAnim = false
                     roshamboViewModel.shamTextAnim = false
                     roshamboViewModel.boTextAnim = false
                     roshamboViewModel.showResult = false
                     roshamboViewModel.showReset = false
+                    roshamboViewModel.letReset = false
                 }
             }
         }
