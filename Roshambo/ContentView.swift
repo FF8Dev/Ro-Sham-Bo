@@ -149,11 +149,11 @@ struct ContentView: View {
                     HStack {
                         switch roshamboViewModel.cpuInput {
                         case 1:
-                            ActionIcon(action: .rock, showResult: $roshamboViewModel.showResult)
+                            ActionIcon(action: .rock, showResult: $roshamboViewModel.showResult, roshamboViewModel: roshamboViewModel, gameLogic: gameLogic)
                         case 2:
-                            ActionIcon(action: .paper, showResult: $roshamboViewModel.showResult)
+                            ActionIcon(action: .paper, showResult: $roshamboViewModel.showResult, roshamboViewModel: roshamboViewModel, gameLogic: gameLogic)
                         case 3:
-                            ActionIcon(action: .scissors, showResult: $roshamboViewModel.showResult)
+                            ActionIcon(action: .scissors, showResult: $roshamboViewModel.showResult, roshamboViewModel: roshamboViewModel, gameLogic: gameLogic)
                         default:
                             Text("ERROR")
                         }
@@ -200,11 +200,11 @@ struct ContentView: View {
                     HStack {
                         switch roshamboViewModel.userInput {
                         case 1:
-                            ActionIcon(action: .rock, showResult: $roshamboViewModel.showResult)
+                            ActionIcon(action: .rock, showResult: $roshamboViewModel.showResult, roshamboViewModel: roshamboViewModel, gameLogic: gameLogic)
                         case 2:
-                            ActionIcon(action: .paper, showResult: $roshamboViewModel.showResult)
+                            ActionIcon(action: .paper, showResult: $roshamboViewModel.showResult, roshamboViewModel: roshamboViewModel, gameLogic: gameLogic)
                         case 3:
-                            ActionIcon(action: .scissors, showResult: $roshamboViewModel.showResult)
+                            ActionIcon(action: .scissors, showResult: $roshamboViewModel.showResult, roshamboViewModel: roshamboViewModel, gameLogic: gameLogic)
                         default:
                             Text("ERROR")
                         }
@@ -315,6 +315,7 @@ struct ActionButton: View {
     }
     
     var timeAnimation = 0.77
+    var maxScore = 3
     
     var body: some View {
         Button(action: {
@@ -364,7 +365,7 @@ struct ActionButton: View {
             // MARK: - Show Reset Toggle - after press
             DispatchQueue.main.asyncAfter(deadline: .now() + timeAnimation*3 + 1.0) {
                 withAnimation {
-                    if gameLogic.cpuScore == 3 || gameLogic.userScore == 3 {
+                    if gameLogic.cpuScore == maxScore || gameLogic.userScore == maxScore {
                         // Game Over
                         roshamboViewModel.gameOver.toggle()
                     }
@@ -374,7 +375,7 @@ struct ActionButton: View {
             }
             
             // MARK: - Background Color - after press
-            if gameLogic.cpuScore == 3 || gameLogic.userScore == 3 {
+            if gameLogic.cpuScore == maxScore || gameLogic.userScore == maxScore {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 4.1) {
                     withAnimation {
                         roshamboViewModel.showResultBg.toggle()
@@ -407,13 +408,16 @@ struct ActionIcon: View {
         case scissors
     }
     
+    @ObservedObject var roshamboViewModel: RoshamboViewModel
+    @ObservedObject var gameLogic: GameLogic
+    
     let actionInput: Int
     let frameColor: Color
     let actionImage: Image
     
     @Binding var showResult: Bool
     
-    init(action: actionMovement, showResult: Binding<Bool>) {
+    init(action: actionMovement, showResult: Binding<Bool>, roshamboViewModel: RoshamboViewModel, gameLogic: GameLogic) {
         if action == .rock {
             self.actionInput = 1
             self.frameColor = Color(#colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1))
@@ -432,6 +436,8 @@ struct ActionIcon: View {
             self.actionImage = Image("rock")
         }
         self._showResult = showResult
+        self.roshamboViewModel = roshamboViewModel
+        self.gameLogic = gameLogic
     }
     
     var body: some View {
@@ -441,6 +447,24 @@ struct ActionIcon: View {
             .overlay(actionImage)
             .shadow(radius: 10)
             .opacity(showResult ? 100 : 0)
+            .onTapGesture {
+                if roshamboViewModel.gameOver {
+                    gameLogic.resetScore()
+                }
+                if roshamboViewModel.letReset {
+                    withAnimation {
+                        roshamboViewModel.gameOver = false
+                        roshamboViewModel.showFight = false
+                        roshamboViewModel.roTextAnim = false
+                        roshamboViewModel.shamTextAnim = false
+                        roshamboViewModel.boTextAnim = false
+                        roshamboViewModel.showResult = false
+                        roshamboViewModel.showReset = false
+                        roshamboViewModel.letReset = false
+                    }
+                }
+                
+            }
     }
 }
 
