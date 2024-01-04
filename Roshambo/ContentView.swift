@@ -71,15 +71,13 @@ struct ContentView: View {
                     .fontWeight(.black)
                     .multilineTextAlignment(.center)
                 HStack {
-                    TextField("User Score", value: $gameLogic.userScore, formatter: NumberFormatter())
-                        .frame(width: /*@START_MENU_TOKEN@*/50.0/*@END_MENU_TOKEN@*/)
-                        .multilineTextAlignment(/*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Text("\(gameLogic.userScore)")
+                        .frame(width: 50.0, height: 30.0)
+                        .addBorder(Color.gray, width: 1, cornerRadius: 5)
                     Text("—")
-                    TextField("CPU Score", value: $gameLogic.cpuScore, formatter: NumberFormatter())
-                        .frame(width: /*@START_MENU_TOKEN@*/50.0/*@END_MENU_TOKEN@*/)
-                        .multilineTextAlignment(/*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Text("\(gameLogic.cpuScore)")
+                        .frame(width: 50.0, height: 30.0)
+                        .addBorder(Color.gray, width: 1, cornerRadius: 5)
                 }
                 Spacer()
             }
@@ -228,6 +226,15 @@ struct ContentView: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - Add Border
+extension View {
+    public func addBorder<S>(_ content: S, width: CGFloat = 1, cornerRadius: CGFloat) -> some View where S : ShapeStyle {
+        let roundedRect = RoundedRectangle(cornerRadius: cornerRadius)
+        return clipShape(roundedRect)
+             .overlay(roundedRect.strokeBorder(content, lineWidth: width))
     }
 }
 
